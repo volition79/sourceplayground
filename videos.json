@@ -1,57 +1,74 @@
-[{
-    "date": "2025.5",
-    "title": "MCP 영상",
-    "views": 30000,
-    "likes": 820,
-    "emotion": "🥳",
-    "thumbnail": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
-}, {
-    "date": "2025.3",
-    "title": "홈페이지 만들기",
-    "views": 10000,
-    "likes": 810,
-    "emotion": "😊",
-    "thumbnail": "https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg"
-}, {
-    "date": "2024.12",
-    "title": "모바일 코딩",
-    "views": 5000,
-    "likes": 100,
-    "emotion": "🤔",
-    "thumbnail": "https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg"
-}, {
-    "date": "2024.9",
-    "title": "게임 제작",
-    "views": 10200,
-    "likes": 300,
-    "emotion": "🤩",
-    "thumbnail": "https://i.ytimg.com/vi/YQHsXMglC9A/hqdefault.jpg"
-}, {
-    "date": "2024.7",
-    "title": "첫 라이브 스트리밍",
-    "views": 2500,
-    "likes": 50,
-    "emotion": "😅",
-    "thumbnail": "https://i.ytimg.com/vi/L_LUpnjgPso/hqdefault.jpg"
-}, {
-    "date": "2024.5",
-    "title": "채널 소개 영상",
-    "views": 1500,
-    "likes": 75,
-    "emotion": "🚀",
-    "thumbnail": "https://i.ytimg.com/vi/u9Mv98Gr5pY/hqdefault.jpg"
-}, {
-    "date": "2024.2",
-    "title": "Vue.js 강좌 시작",
-    "views": 8000,
-    "likes": 450,
-    "emotion": "🤓",
-    "thumbnail": "https://i.ytimg.com/vi/Ptbk2af68e8/hqdefault.jpg"
-}, {
-    "date": "2023.11",
-    "title": "나의 첫 코딩 영상",
-    "views": 300,
-    "likes": 20,
-    "emotion": "🤞",
-    "thumbnail": "https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"
-}]
+[
+    {
+        "date": "2025.5",
+        "title": "MCP 영상",
+        "views": 30000,
+        "likes": 820,
+        "emotion": "🥳",
+        "thumbnail": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+        "videoId": "dQw4w9WgXcQ"
+    },
+    {
+        "date": "2025.3",
+        "title": "홈페이지 만들기",
+        "views": 10000,
+        "likes": 810,
+        "emotion": "😊",
+        "thumbnail": "https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg",
+        "videoId": "3JZ_D3ELwOQ"
+    },
+    {
+        "date": "2024.12",
+        "title": "모바일 코딩",
+        "views": 5000,
+        "likes": 100,
+        "emotion": "🤔",
+        "thumbnail": "https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg",
+        "videoId": "JGwWNGJdvx8"
+    },
+    {
+        "date": "2024.9",
+        "title": "게임 제작",
+        "views": 10200,
+        "likes": 300,
+        "emotion": "🤩",
+        "thumbnail": "https://i.ytimg.com/vi/YQHsXMglC9A/hqdefault.jpg",
+        "videoId": "YQHsXMglC9A"
+    },
+    {
+        "date": "2024.7",
+        "title": "첫 라이브 스트리밍",
+        "views": 2500,
+        "likes": 50,
+        "emotion": "😅",
+        "thumbnail": "https://i.ytimg.com/vi/L_LUpnjgPso/hqdefault.jpg",
+        "videoId": "L_LUpnjgPso"
+    },
+    {
+        "date": "2024.5",
+        "title": "채널 소개 영상",
+        "views": 1500,
+        "likes": 75,
+        "emotion": "🚀",
+        "thumbnail": "https://i.ytimg.com/vi/u9Mv98Gr5pY/hqdefault.jpg",
+        "videoId": "u9Mv98Gr5pY"
+    },
+    {
+        "date": "2024.2",
+        "title": "Vue.js 강좌 시작",
+        "views": 8000,
+        "likes": 450,
+        "emotion": "🤓",
+        "thumbnail": "https://i.ytimg.com/vi/Ptbk2af68e8/hqdefault.jpg",
+        "videoId": "Ptbk2af68e8"
+    },
+    {
+        "date": "2023.11",
+        "title": "나의 첫 코딩 영상",
+        "views": 300,
+        "likes": 20,
+        "emotion": "🤞",
+        "thumbnail": "https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg",
+        "videoId": "5qap5aO4i9A"
+    }
+]
