@@ -337,27 +337,7 @@
         }
         window.addEventListener('scroll', handleScroll);
 
-        // Fetch comments data
-        fetch('users_comment.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                commentsData = data;
-                // Initial load for videos should happen after comments are fetched
-                loadItems('video', videoItemsToShow); 
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation for comments:', error);
-                // Still load videos even if comments fail
-                loadItems('video', videoItemsToShow);
-            });
-
-        loadItems('subscriber', subscriberItemsToShow);
-        updateSubscriberCountHeader();
+        loadAllData(); // Ensure all data is loaded on page load
     </script>
 
 </body></html>
