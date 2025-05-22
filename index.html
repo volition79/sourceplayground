@@ -327,8 +327,21 @@
                         }
                     } else if (contentSubscribers.classList.contains('active')) {
                         if (subscriberItemsToShow < subscribersData.length) {
-                            subscriberItemsToShow += 4;
-                            loadItems('subscriber', Math.min(subscriberItemsToShow, subscribersData.length));
+                            const startIndex = subscriberItemsToShow; // Number of items already loaded
+                            // Calculate how many to show after this scroll, capped by total data length
+                            const newCount = Math.min(subscriberItemsToShow + 4, subscribersData.length); 
+                            
+                            const itemsToAppend = subscribersData.slice(startIndex, newCount);
+
+                            itemsToAppend.forEach((item, relativeIndex) => {
+                                // The 'index' for createTimelineItem should be the item's actual index in subscribersData
+                                // to maintain consistent styling (e.g., alternating sides, colors).
+                                const actualIndex = startIndex + relativeIndex;
+                                const timelineItem = createTimelineItem(item, actualIndex, subscribersData.length, 'subscriber');
+                                subscribersTimeline.appendChild(timelineItem);
+                            });
+                            
+                            subscriberItemsToShow = newCount; // Update the count of shown items
                         }
                     }
                     loadingIndicator.classList.add('hidden');
