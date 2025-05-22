@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>소스놀이터 유튜버의 역사 - 히스토리</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .timeline-item {
+            transition: background-color 0.5s ease-in-out;
+        }
+        .timeline-line {
+            width: 4px;
+            background: linear-gradient(to bottom, #60a5fa, #10b981, #f59e0b, #ec4899);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            z-index: -1;
+        }
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px currentColor;
+        }
+        .timeline-content-left .timeline-dot {
+            left: calc(50% - 8px);
+        }
+        .timeline-content-right .timeline-dot {
+            left: calc(50% + 8px);
+        }
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        /* Styles from index2.html */
+        .subscriber-card {
+            background: linear-gradient(135deg, #1f2937, #374151);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .subscriber-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.1) inset;
+        }
+        .subscriber-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: rotate(0deg);
+            transition: transform 1s ease-in-out;
+            pointer-events: none;
+        }
+        .subscriber-card:hover::before {
+            transform: rotate(360deg);
+        }
+        .subscriber-count {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #a78bfa, #fb7185, #fde047);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(251, 113, 133, 0.3);
+        }
+        .subscriber-change {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        .subscriber-change.positive {
+            color: #34d399;}
+        .subscriber-change.negative {
+            color: #f87171;}
+        .date-badge {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .emotion-icon {
+            font-size: 3rem;
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            opacity: 0.2;
+            filter: grayscale(50%);
+        }
+         .timeline-line-vertical {
+            width: 4px;
+            background: linear-gradient(to bottom, #60a5fa, #10b981, #f59e0b, #ec4899);
+            position: absolute;
+            left: calc(50% - 2px);
+            top:0;
+            height: 100%;
+            z-index: -1;
+        }
+        #subscribersTimeline .subscriber-card {
+            margin-left: auto;
+            margin-right: auto;
+            width: calc(100% - 40px);max-width: 500px;
+        }
+        #subscribersTimeline .relative:not(:last-child) {
+            padding-bottom: 2rem;}
+        #subscribersTimeline .relative::after {content: '';
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #4f46e5;border: 3px solid #111827;position: absolute;
+            left: calc(50% - 8px);
+            top: 1.5rem;z-index: 1;
+            box-shadow: 0 0 10px #4f46e5;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased text-gray-800"> <!-- Body class from index.html -->
+<div class="container mx-auto px-4 py-8">
+<header class="text-center mb-8"> <!-- Header from index.html -->
+<h1 class="text-4xl font-bold text-blue-600">소스놀이터</h1> <!-- Title from index.html -->
+<p class="text-lg text-gray-600">유튜버의 역사 - 히스토리</p> <!-- Subtitle from index.html -->
+<p class="text-md text-gray-500 mt-1">구독자: <span id="subscriberCountHeader">15,000</span>명</p> <!-- مشترک شمار از index.html -->
+</header>
+<div class="flex justify-center space-x-4 mb-8"> <!-- Tab buttons container from index.html -->
+<button class="tab-button active" id="tabVideos">영상</button> <!-- Video tab button from index.html, set to active -->
+<button class="tab-button" id="tabSubscribers">구독자</button> <!-- Subscriber tab button from index2.html, not active by default -->
+</div>
+<div class="tab-content active" id="contentVideos"> <!-- Video content area from index.html, set to active -->
+<div class="relative">
+<div class="timeline-line"></div>
+<div class="space-y-12" id="videosTimeline">
+</div>
+</div>
+</div>
+<div class="tab-content" id="contentSubscribers"> <!-- Subscriber content area from index2.html, not active by default -->
+<div class="relative">
+<!-- The vertical timeline line for subscribers -->
+<div class="timeline-line-vertical"></div>
+<div class="space-y-0" id="subscribersTimeline"> <!-- Ensure this ID matches JS and has space-y-0 if cards have own margin -->
+</div>
+</div>
+</div>
+<div class="text-center py-8 text-gray-500 text-lg hidden" id="loading"> <!-- Loading indicator from index.html -->
+<span class="material-icons animate-spin text-3xl">sync</span> 로딩 중...
+        </div>
+</div>
+<script>
+        const videosData = [{
+            date: "2025.5",
+            title: "MCP 영상",
+            views: 30000,
+            likes: 820,
+            emotion: "🥳",
+            thumbnail: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
+        }, {
+            date: "2025.3",
+            title: "홈페이지 만들기",
+            views: 10000,
+            likes: 810,
+            emotion: "😊",
+            thumbnail: "https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg"
+        }, {
+            date: "2024.12",
+            title: "모바일 코딩",
+            views: 5000,
+            likes: 100,
+            emotion: "🤔",
+            thumbnail: "https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg"
+        }, {
+            date: "2024.9",
+            title: "게임 제작",
+            views: 10200,
+            likes: 300,
+            emotion: "🤩",
+            thumbnail: "https://i.ytimg.com/vi/YQHsXMglC9A/hqdefault.jpg"
+        }, {
+            date: "2024.7",
+            title: "첫 라이브 스트리밍",
+            views: 2500,
+            likes: 50,
+            emotion: "😅",
+            thumbnail: "https://i.ytimg.com/vi/L_LUpnjgPso/hqdefault.jpg"
+        }, {
+            date: "2024.5",
+            title: "채널 소개 영상",
+            views: 1500,
+            likes: 75,
+            emotion: "🚀",
+            thumbnail: "https://i.ytimg.com/vi/u9Mv98Gr5pY/hqdefault.jpg"
+        }, {
+            date: "2024.2",
+            title: "Vue.js 강좌 시작",
+            views: 8000,
+            likes: 450,
+            emotion: "🤓",
+            thumbnail: "https://i.ytimg.com/vi/Ptbk2af68e8/hqdefault.jpg"
+        }, {
+            date: "2023.11",
+            title: "나의 첫 코딩 영상",
+            views: 300,
+            likes: 20,
+            emotion: "🤞",
+            thumbnail: "https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"
+        }, ];
+        const subscribersData = [{
+            date: "2025.5",
+            count: 15000,
+            change: 2000,
+            emotion: "🎉"
+        }, {
+            date: "2025.1",
+            count: 13000,
+            change: 3000,
+            emotion: "📈"
+        }, {
+            date: "2024.8",
+            count: 10000,
+            change: 5000,
+            emotion: "🏆"
+        }, {
+            date: "2024.3",
+            count: 5000,
+            change: 4000,
+            emotion: "🔥"
+        }, {
+            date: "2023.10",
+            count: 1000,
+            change: 900,
+            emotion: "💪"
+        }, {
+            date: "2023.7",
+            count: 100,
+            change: 100,
+            emotion: "🌱"
+        }, ];
+        // subscribersData from index2.html will be merged here
+        const videosTimeline = document.getElementById('videosTimeline');
+        const subscribersTimeline = document.getElementById('subscribersTimeline'); // This ID is for the container of subscriber cards
+        const loadingIndicator = document.getElementById('loading');
+        let videoItemsToShow = 4;
+        let subscriberItemsToShow = 4; // from index2.html (can be adjusted)
+        const tabVideos = document.getElementById('tabVideos');
+        const tabSubscribers = document.getElementById('tabSubscribers');
+        const contentVideos = document.getElementById('contentVideos');
+        const contentSubscribers = document.getElementById('contentSubscribers');
+        tabVideos.addEventListener('click', () => {
+            tabVideos.classList.add('active');
+            tabSubscribers.classList.remove('active');
+            contentVideos.classList.add('active');
+            contentSubscribers.classList.remove('active');
+            updateSubscriberCountHeader();
+        });
+        tabSubscribers.addEventListener('click', () => {
+            tabSubscribers.classList.add('active');
+            tabVideos.classList.remove('active');
+            contentSubscribers.classList.add('active');
+            contentVideos.classList.remove('active');
+            updateSubscriberCountHeader();
+        });
+        function updateSubscriberCountHeader() {
+            if (subscribersData.length > 0) {
+                document.getElementById('subscriberCountHeader').textContent = subscribersData[0].count.toLocaleString();
+            }
+        }
+
+        function getGradientColor(index, totalItems) { // For video timeline items
+            const colors = [
+                'bg-blue-400', 'bg-green-400', 'bg-yellow-400', 'bg-pink-400',
+                'bg-indigo-400', 'bg-purple-400', 'bg-red-400', 'bg-teal-400'
+            ];
+            return colors[index % colors.length];
+        }
+
+        // Renamed from createTimelineItem, now specifically for video items
+        function createVideoTimelineItem(item, index, totalItems) {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('timeline-item', 'relative', 'py-6', 'px-4', 'rounded-lg', 'shadow-md', 'hover:shadow-xl', 'transition-all', 'duration-300');
+            const bgColor = getGradientColor(index, totalItems);
+            itemDiv.classList.add(bgColor.replace('bg-', 'border-l-4').replace('-400', '-600'));
+            itemDiv.style.backgroundColor = 'white'; // Video items have a white background
+            const dotColor = bgColor.replace('bg-', 'text-').replace('-400', '-500');
+            let contentHtml = `
+                <div class="timeline-dot ${dotColor}" style="top: 50%; transform: translate(-50%, -50%);"></div>
+                <div class="${index % 2 === 0 ? 'timeline-content-left text-right pr-16' : 'timeline-content-right text-left pl-16'}">
+                    <span class="absolute ${index % 2 === 0 ? 'right-full mr-4' : 'left-full ml-4'} top-1/2 -translate-y-1/2 text-3xl">${item.emotion}</span>
+                    <img src="${item.thumbnail}" alt="${item.title} 썸네일" class="w-32 h-18 object-cover rounded-md mb-2 ${index % 2 === 0 ? 'ml-auto' : 'mr-auto'} border border-gray-200 shadow-sm">
+                    <p class="text-sm text-gray-500">${item.date}</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-1">${item.title}</h3>
+                    <p class="text-gray-600">조회수: ${item.views.toLocaleString()}회</p>
+                    <p class="text-gray-600">좋아요: ${item.likes.toLocaleString()}개</p>
+                </div>
+            `;
+            itemDiv.innerHTML = contentHtml;
+            return itemDiv;
+        }
+
+        // Function to create subscriber cards (from index2.html)
+        function createSubscriberCard(item, index) {
+            const itemWrapper = document.createElement('div');
+            itemWrapper.classList.add('relative'); // For the dot positioning
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('subscriber-card', 'mx-auto');
+            const changeClass = item.change >= 0 ? 'positive' : 'negative';
+            const changeSign = item.change >= 0 ? '+' : '';
+            itemDiv.innerHTML = `
+                <div class="date-badge">${item.date}</div>
+                <div class="emotion-icon">${item.emotion}</div>
+                <p class="subscriber-count">${item.count.toLocaleString()}</p>
+                <p class="subscriber-change ${changeClass}">${changeSign}${item.change.toLocaleString()}명</p>
+                <p class="text-sm text-gray-400 mt-1">구독자 달성</p>
+            `;
+            // Add dot for timeline effect
+            const dotElement = document.createElement('div');
+            dotElement.style.width = '16px';
+            dotElement.style.height = '16px';
+            dotElement.style.borderRadius = '50%';
+            dotElement.style.backgroundColor = '#4f46e5'; // Subscriber dot color
+            dotElement.style.border = '3px solid #111827'; // Background of subscriber card to make dot appear "on top"
+            dotElement.style.position = 'absolute';
+            dotElement.style.left = 'calc(50% - 8px)'; // Centered with the vertical line
+            dotElement.style.top = '1.5rem'; // Adjust based on card padding to align with line
+            dotElement.style.zIndex = '1';
+            dotElement.style.boxShadow = '0 0 10px #4f46e5';
+
+            itemWrapper.appendChild(dotElement); // Add dot to the wrapper
+            itemWrapper.appendChild(itemDiv); // Add card to the wrapper
+            return itemWrapper;
+        }
+
+        function loadItems(type, count) {
+            if (type === 'video') {
+                const itemsToDisplay = videosData.slice(0, count);
+                videosTimeline.innerHTML = ''; // Clear previous items
+                itemsToDisplay.forEach((item, index) => {
+                    const videoItem = createVideoTimelineItem(item, index, itemsToDisplay.length);
+                    videosTimeline.appendChild(videoItem);
+                });
+            } else if (type === 'subscriber') {
+                const itemsToDisplay = subscribersData.slice(0, count);
+                subscribersTimeline.innerHTML = ''; // Clear previous items
+                itemsToDisplay.forEach((item, index) => {
+                    const subscriberCard = createSubscriberCard(item, index);
+                    subscribersTimeline.appendChild(subscriberCard);
+                });
+            }
+        }
+
+        function handleScroll() {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+                loadingIndicator.classList.remove('hidden');
+                setTimeout(() => {
+                    if (contentVideos.classList.contains('active')) {
+                        if (videoItemsToShow < videosData.length) {
+                            videoItemsToShow += 4;
+                            loadItems('video', Math.min(videoItemsToShow, videosData.length));
+                        }
+                    } else if (contentSubscribers.classList.contains('active')) {
+                        if (subscriberItemsToShow < subscribersData.length) {
+                            subscriberItemsToShow += 4;
+                            loadItems('subscriber', Math.min(subscriberItemsToShow, subscribersData.length));
+                        }
+                    }
+                    loadingIndicator.classList.add('hidden');
+                }, 1000);
+            }
+        }
+        window.addEventListener('scroll', handleScroll);
+        loadItems('video', videoItemsToShow);
+        loadItems('subscriber', subscriberItemsToShow);
+        updateSubscriberCountHeader();
+    </script>
+
+</body></html>
