@@ -1,74 +1,65 @@
 [
-    {
-        "date": "2025.5",
-        "title": "MCP 영상",
-        "views": 30000,
-        "likes": 820,
-        "emotion": "🥳",
-        "thumbnail": "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-        "videoId": "dQw4w9WgXcQ"
-    },
-    {
-        "date": "2025.3",
-        "title": "홈페이지 만들기",
-        "views": 10000,
-        "likes": 810,
-        "emotion": "😊",
-        "thumbnail": "https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg",
-        "videoId": "3JZ_D3ELwOQ"
-    },
-    {
-        "date": "2024.12",
-        "title": "모바일 코딩",
-        "views": 5000,
-        "likes": 100,
-        "emotion": "🤔",
-        "thumbnail": "https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg",
-        "videoId": "JGwWNGJdvx8"
-    },
-    {
-        "date": "2024.9",
-        "title": "게임 제작",
-        "views": 10200,
-        "likes": 300,
-        "emotion": "🤩",
-        "thumbnail": "https://i.ytimg.com/vi/YQHsXMglC9A/hqdefault.jpg",
-        "videoId": "YQHsXMglC9A"
-    },
-    {
-        "date": "2024.7",
-        "title": "첫 라이브 스트리밍",
-        "views": 2500,
-        "likes": 50,
-        "emotion": "😅",
-        "thumbnail": "https://i.ytimg.com/vi/L_LUpnjgPso/hqdefault.jpg",
-        "videoId": "L_LUpnjgPso"
-    },
-    {
-        "date": "2024.5",
-        "title": "채널 소개 영상",
-        "views": 1500,
-        "likes": 75,
-        "emotion": "🚀",
-        "thumbnail": "https://i.ytimg.com/vi/u9Mv98Gr5pY/hqdefault.jpg",
-        "videoId": "u9Mv98Gr5pY"
-    },
-    {
-        "date": "2024.2",
-        "title": "Vue.js 강좌 시작",
-        "views": 8000,
-        "likes": 450,
-        "emotion": "🤓",
-        "thumbnail": "https://i.ytimg.com/vi/Ptbk2af68e8/hqdefault.jpg",
-        "videoId": "Ptbk2af68e8"
-    },
-    {
-        "date": "2023.11",
-        "title": "나의 첫 코딩 영상",
-        "views": 300,
-        "likes": 20,
-        "emotion": "🤞",
-        "thumbnail": "https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg",
-        "videoId": "5qap5aO4i9A"
-    }
+  {
+    "date": "2025.4",
+    "title": "나 어그로 안끄는데, 레알 찐임. 99.9%가 모르는 완전 새로운 AI 코딩 방법",
+    "views": 33427,
+    "likes": 1368,
+    "emotion": "💡",
+    "thumbnail": "https://i.ytimg.com/vi/GRtrfdSeR20/maxresdefault.jpg",
+    "videoId": "GRtrfdSeR20"
+  },
+  {
+    "date": "2024.5",
+    "title": "GPT 4o 대박 활용법, 단지 말로만 코딩 (배포까지 해줌 ㄷㄷ)! 프로그래머 사라질지도",
+    "views": 64029,
+    "likes": 930,
+    "emotion": "💡",
+    "thumbnail": "https://i.ytimg.com/vi/6eHH2A3ZUMk/maxresdefault.jpg",
+    "videoId": "6eHH2A3ZUMk"
+  },
+  {
+    "date": "정보 없음",
+    "title": "풀 에이전트에 GPT MCP 탑재하니, 미쳤다. 리서치 + 디자인 + 프로그램 + 배포까지! 그냥 혼자 다했다",
+    "views": 13920,
+    "likes": 663,
+    "emotion": "💡",
+    "thumbnail": "https://i.ytimg.com/vi/UGZTzPS2VZU/maxresdefault.jpg",
+    "videoId": "UGZTzPS2VZU"
+  },
+  {
+    "date": "2025.5",
+    "title": "해외에선 난리남! 차단 싹 우회하는 플레이라이트 스텔스 + 코딩 환각 제압하는 신상 Context7 MCP",
+    "views": 5528,
+    "likes": 238,
+    "emotion": "💡",
+    "thumbnail": "https://i.ytimg.com/vi/Cy34dlnQKJg/maxresdefault.jpg",
+    "videoId": "Cy34dlnQKJg"
+  },
+  {
+    "date": "2023.5",
+    "title": "파이썬으로 5분만에 무료 홈페이지 만들기 (Flask, 약 10줄의 코딩으로 웹서버 구동)",
+    "views": 31497,
+    "likes": 507,
+    "emotion": "💡",
+    "thumbnail": "https://i.ytimg.com/vi/RxGQVeipdjg/hqdefault.jpg",
+    "videoId": "RxGQVeipdjg"
+  },
+  {
+    "date": "2025.4",
+    "title": "가족 사진 넣어, GPT 4o 지브리 동화책 PDF 만들기 - 왜 우리 가족들이 동화로 변화는 거임. ㅋㅋㅋ",
+    "views": "정보 없음",
+    "likes": 13,
+    "emotion": "💡",
+    "thumbnail": "https://i.ytimg.com/vi/uMoE2N-CCSo/maxresdefault.jpg",
+    "videoId": "uMoE2N-CCSo"
+  },
+  {
+    "date": "2025.1",
+    "title": "실시간 버스 찾기 앱제작 (파이썬 & PHP), 공공데이터포털 API (1부)",
+    "views": 1171,
+    "likes": 24,
+    "emotion": "💡",
+    "thumbnail": "https://i.ytimg.com/vi/JZpl-WumOhk/maxresdefault.jpg",
+    "videoId": "JZpl-WumOhk"
+  }
 ]
