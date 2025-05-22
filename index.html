@@ -102,12 +102,14 @@
 <script>
         let videosData = [];
         let subscribersData = [];
+        let commentsData = []; // Initialize commentsData
 
         async function loadAllData() {
             try {
-                const [videosResponse, subscribersResponse] = await Promise.all([
+                const [videosResponse, subscribersResponse, commentsResponse] = await Promise.all([
                     fetch('videos.json'),
-                    fetch('subscribers.json')
+                    fetch('subscribers.json'),
+                    fetch('users_comment.json')
                 ]);
 
                 if (!videosResponse.ok) {
@@ -116,11 +118,15 @@
                 if (!subscribersResponse.ok) {
                     throw new Error(`HTTP error! status: ${subscribersResponse.status} while fetching subscribers.json`);
                 }
+                if (!commentsResponse.ok) {
+                    throw new Error(`HTTP error! status: ${commentsResponse.status} while fetching users_comment.json`);
+                }
 
                 videosData = await videosResponse.json();
                 subscribersData = await subscribersResponse.json();
+                commentsData = await commentsResponse.json();
 
-                // Initial load after data is fetched
+                // Initial load after all data is fetched
                 loadItems('video', videoItemsToShow);
                 loadItems('subscriber', subscriberItemsToShow);
                 updateSubscriberCountHeader();
@@ -136,98 +142,10 @@
             }
         }
 
-        // const videosData = [{
-        // date: "2025.5",
-        // title: "MCP 영상",
-            views: 30000,
-            likes: 820,
-            emotion: "🥳",
-            thumbnail: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
-        }, {
-            date: "2025.3",
-            title: "홈페이지 만들기",
-            views: 10000,
-            likes: 810,
-            emotion: "😊",
-            thumbnail: "https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg"
-        }, {
-            date: "2024.12",
-            title: "모바일 코딩",
-            views: 5000,
-            likes: 100,
-            emotion: "🤔",
-            thumbnail: "https://i.ytimg.com/vi/JGwWNGJdvx8/hqdefault.jpg"
-        }, {
-            date: "2024.9",
-            title: "게임 제작",
-            views: 10200,
-            likes: 300,
-            emotion: "🤩",
-            thumbnail: "https://i.ytimg.com/vi/YQHsXMglC9A/hqdefault.jpg"
-        }, {
-            date: "2024.7",
-            title: "첫 라이브 스트리밍",
-            views: 2500,
-            likes: 50,
-            emotion: "😅",
-            thumbnail: "https://i.ytimg.com/vi/L_LUpnjgPso/hqdefault.jpg"
-        }, {
-            date: "2024.5",
-            title: "채널 소개 영상",
-            views: 1500,
-            likes: 75,
-            emotion: "🚀",
-            thumbnail: "https://i.ytimg.com/vi/u9Mv98Gr5pY/hqdefault.jpg"
-        }, {
-            date: "2024.2",
-            title: "Vue.js 강좌 시작",
-            views: 8000,
-            likes: 450,
-            emotion: "🤓",
-            thumbnail: "https://i.ytimg.com/vi/Ptbk2af68e8/hqdefault.jpg"
-        }, {
-            date: "2023.11",
-            title: "나의 첫 코딩 영상",
-            views: 300,
-            likes: 20,
-            emotion: "🤞",
-            thumbnail: "https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"
-        // }, ];
-        // const subscribersData = [{
-        // date: "2025.5",
-        // count: 15000,
-            change: 2000,
-            emotion: "🎉"
-        }, {
-            date: "2025.1",
-            count: 13000,
-            change: 3000,
-            emotion: "📈"
-        }, {
-            date: "2024.8",
-            count: 10000,
-            change: 5000,
-            emotion: "🏆"
-        }, {
-            date: "2024.3",
-            count: 5000,
-            change: 4000,
-            emotion: "🔥"
-        }, {
-            date: "2023.10",
-            count: 1000,
-            change: 900,
-            emotion: "💪"
-        }, {
-            date: "2023.7",
-            count: 100,
-            change: 100,
-            emotion: "🌱"
-        // }, ];
+        // Note: commentsData is already initialized above loadAllData
         const videosTimeline = document.getElementById('videosTimeline');
         const subscribersTimeline = document.getElementById('subscribersTimeline');
         const loadingIndicator = document.getElementById('loading');
-        let commentsData = []; // Initialize commentsData
         let videoItemsToShow = 4;
         let subscriberItemsToShow = 4;
         const tabVideos = document.getElementById('tabVideos');
@@ -269,17 +187,21 @@
             const dotColor = bgColor.replace('bg-', 'text-').replace('-400', '-500');
             let contentHtml = '';
             if (type === 'video') {
-                // Extract video ID from thumbnail URL
-                // Example thumbnail: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
-                // Video ID: dQw4w9WgXcQ
+                // Determine videoId, prioritizing item.videoId
                 let videoId = '';
-                try {
-                    const urlParts = item.thumbnail.split('/');
-                    if (urlParts.length >= 2) { // Ensure there's a part before the last one
-                        videoId = urlParts[urlParts.length - 2];
+                if (item.videoId && typeof item.videoId === 'string' && item.videoId.trim() !== '') {
+                    videoId = item.videoId;
+                } else {
+                    // Fallback to extracting from thumbnail if item.videoId is not present
+                    console.warn("videoId not found in item data, attempting to extract from thumbnail for video:", item.title);
+                    try {
+                        const urlParts = item.thumbnail.split('/');
+                        if (urlParts.length >= 2) { // Ensure there's a part before the last one
+                            videoId = urlParts[urlParts.length - 2];
+                        }
+                    } catch (e) {
+                        console.error("Error extracting video ID from thumbnail:", item.thumbnail, e);
                     }
-                } catch (e) {
-                    console.error("Error extracting video ID from thumbnail:", item.thumbnail, e);
                 }
                 const videoUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : '#'; // Fallback to '#' if no ID
 
