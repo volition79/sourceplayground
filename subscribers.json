@@ -1,0 +1,31 @@
+[{
+    "date": "2025.5",
+    "count": 15000,
+    "change": 2000,
+    "emotion": "🎉"
+}, {
+    "date": "2025.1",
+    "count": 13000,
+    "change": 3000,
+    "emotion": "📈"
+}, {
+    "date": "2024.8",
+    "count": 10000,
+    "change": 5000,
+    "emotion": "🏆"
+}, {
+    "date": "2024.3",
+    "count": 5000,
+    "change": 4000,
+    "emotion": "🔥"
+}, {
+    "date": "2023.10",
+    "count": 1000,
+    "change": 900,
+    "emotion": "💪"
+}, {
+    "date": "2023.7",
+    "count": 100,
+    "change": 100,
+    "emotion": "🌱"
+}]

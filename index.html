@@ -100,9 +100,45 @@
         </div>
 </div>
 <script>
-        const videosData = [{
-            date: "2025.5",
-            title: "MCP 영상",
+        let videosData = [];
+        let subscribersData = [];
+
+        async function loadAllData() {
+            try {
+                const [videosResponse, subscribersResponse] = await Promise.all([
+                    fetch('videos.json'),
+                    fetch('subscribers.json')
+                ]);
+
+                if (!videosResponse.ok) {
+                    throw new Error(`HTTP error! status: ${videosResponse.status} while fetching videos.json`);
+                }
+                if (!subscribersResponse.ok) {
+                    throw new Error(`HTTP error! status: ${subscribersResponse.status} while fetching subscribers.json`);
+                }
+
+                videosData = await videosResponse.json();
+                subscribersData = await subscribersResponse.json();
+
+                // Initial load after data is fetched
+                loadItems('video', videoItemsToShow);
+                loadItems('subscriber', subscriberItemsToShow);
+                updateSubscriberCountHeader();
+
+            } catch (error) {
+                console.error("Failed to load data:", error);
+                // Optionally, display an error message to the user on the page
+                const timelineDiv = document.getElementById('videosTimeline') || document.getElementById('subscribersTimeline');
+                if (timelineDiv) {
+                    timelineDiv.innerHTML = `<p class="text-red-500 text-center">데이터를 불러오는데 실패했습니다: ${error.message}</p>`;
+                }
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        // const videosData = [{
+        // date: "2025.5",
+        // title: "MCP 영상",
             views: 30000,
             likes: 820,
             emotion: "🥳",
@@ -156,10 +192,10 @@
             likes: 20,
             emotion: "🤞",
             thumbnail: "https://i.ytimg.com/vi/5qap5aO4i9A/hqdefault.jpg"
-        }, ];
-        const subscribersData = [{
-            date: "2025.5",
-            count: 15000,
+        // }, ];
+        // const subscribersData = [{
+        // date: "2025.5",
+        // count: 15000,
             change: 2000,
             emotion: "🎉"
         }, {
@@ -187,7 +223,7 @@
             count: 100,
             change: 100,
             emotion: "🌱"
-        }, ];
+        // }, ];
         const videosTimeline = document.getElementById('videosTimeline');
         const subscribersTimeline = document.getElementById('subscribersTimeline');
         const loadingIndicator = document.getElementById('loading');
@@ -232,16 +268,32 @@
             const dotColor = bgColor.replace('bg-', 'text-').replace('-400', '-500');
             let contentHtml = '';
             if (type === 'video') {
+                // Extract video ID from thumbnail URL
+                // Example thumbnail: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
+                // Video ID: dQw4w9WgXcQ
+                let videoId = '';
+                try {
+                    const urlParts = item.thumbnail.split('/');
+                    if (urlParts.length >= 2) { // Ensure there's a part before the last one
+                        videoId = urlParts[urlParts.length - 2];
+                    }
+                } catch (e) {
+                    console.error("Error extracting video ID from thumbnail:", item.thumbnail, e);
+                }
+                const videoUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : '#'; // Fallback to '#' if no ID
+
                 contentHtml = `
-                    <div class="timeline-dot ${dotColor}" style="top: 50%; transform: translate(-50%, -50%);"></div>
-                    <div class="${index % 2 === 0 ? 'timeline-content-left text-right pr-16' : 'timeline-content-right text-left pl-16'}">
-                        <span class="absolute ${index % 2 === 0 ? 'right-full mr-4' : 'left-full ml-4'} top-1/2 -translate-y-1/2 text-3xl">${item.emotion}</span>
-                        <img src="${item.thumbnail}" alt="${item.title} 썸네일" class="w-32 h-18 object-cover rounded-md mb-2 ${index % 2 === 0 ? 'ml-auto' : 'mr-auto'} border border-gray-200 shadow-sm">
-                        <p class="text-sm text-gray-500">${item.date}</p>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-1">${item.title}</h3>
-                        <p class="text-gray-600">조회수: ${item.views.toLocaleString()}회</p>
-                        <p class="text-gray-600">좋아요: ${item.likes.toLocaleString()}개</p>
-                    </div>
+                    <a href="${videoUrl}" target="_blank" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="timeline-dot ${dotColor}" style="top: 50%; transform: translate(-50%, -50%);"></div>
+                        <div class="${index % 2 === 0 ? 'timeline-content-left text-right pr-16' : 'timeline-content-right text-left pl-16'}">
+                            <span class="absolute ${index % 2 === 0 ? 'right-full mr-4' : 'left-full ml-4'} top-1/2 -translate-y-1/2 text-3xl">${item.emotion}</span>
+                            <img src="${item.thumbnail}" alt="${item.title} 썸네일" class="w-32 h-18 object-cover rounded-md mb-2 ${index % 2 === 0 ? 'ml-auto' : 'mr-auto'} border border-gray-200 shadow-sm">
+                            <p class="text-sm text-gray-500">${item.date}</p>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-1">${item.title}</h3>
+                            <p class="text-gray-600">조회수: ${item.views.toLocaleString()}회</p>
+                            <p class="text-gray-600">좋아요: ${item.likes.toLocaleString()}개</p>
+                        </div>
+                    </a>
                 `;
             } else { // subscriber
                 contentHtml = `
