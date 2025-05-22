@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>소스놀이터 유튜버의 역사 - 구독자</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #111827;color: #e5e7eb;}
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+            background-color: #374151;color: #d1d5db;
+            border: 1px solid transparent;
+        }
+        .tab-button.active {
+            background-color: #4f46e5;color: white;
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.5);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .subscriber-card {
+            background: linear-gradient(135deg, #1f2937, #374151);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .subscriber-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.1) inset;
+        }
+        .subscriber-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: rotate(0deg);
+            transition: transform 1s ease-in-out;
+            pointer-events: none;
+        }
+        .subscriber-card:hover::before {
+            transform: rotate(360deg);
+        }
+        .subscriber-count {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #a78bfa, #fb7185, #fde047);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(251, 113, 133, 0.3);
+        }
+        .subscriber-change {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        .subscriber-change.positive {
+            color: #34d399;}
+        .subscriber-change.negative {
+            color: #f87171;}
+        .date-badge {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .emotion-icon {
+            font-size: 3rem;
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            opacity: 0.2;
+            filter: grayscale(50%);
+        }
+         .timeline-line-vertical {
+            width: 4px;
+            background: linear-gradient(to bottom, #60a5fa, #10b981, #f59e0b, #ec4899);
+            position: absolute;
+            left: calc(50% - 2px);
+            top:0;
+            height: 100%;
+            z-index: -1;
+        }#subscribersTimeline .subscriber-card {
+            margin-left: auto;
+            margin-right: auto;
+            width: calc(100% - 40px);max-width: 500px;
+        }
+        #subscribersTimeline .relative:not(:last-child) {
+            padding-bottom: 2rem;}
+        #subscribersTimeline .relative::after {content: '';
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #4f46e5;border: 3px solid #111827;position: absolute;
+            left: calc(50% - 8px);
+            top: 1.5rem;z-index: 1;
+            box-shadow: 0 0 10px #4f46e5;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased text-gray-200">
+<div class="container mx-auto px-4 py-8">
+<header class="text-center mb-12">
+<h1 class="text-5xl font-bold" style="background: linear-gradient(90deg, #a78bfa, #fb7185); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">소스놀이터</h1>
+<p class="text-xl text-gray-400 mt-2">유튜버의 역사 - 구독자 변화</p>
+<p class="text-lg text-gray-500 mt-1">현재 구독자: <span class="font-semibold text-purple-400" id="subscriberCountHeader">15,000</span>명</p>
+</header>
+<div class="flex justify-center space-x-4 mb-10">
+<button class="tab-button" id="tabVideos">영상</button>
+<button class="tab-button active" id="tabSubscribers">구독자</button>
+</div>
+<div class="tab-content" id="contentVideos">
+<p class="text-center text-gray-400">영상 탭 컨텐츠입니다.</p>
+</div>
+<div class="tab-content active" id="contentSubscribers">
+<div class="relative">
+<div class="timeline-line-vertical"></div>
+<div class="space-y-0" id="subscribersTimeline">
+</div>
+</div>
+</div>
+<div class="text-center py-8 text-gray-400 text-lg hidden" id="loading">
+<span class="material-icons animate-spin text-3xl text-purple-400">donut_large</span> 로딩 중...
+        </div>
+</div>
+<script>
+        const videosData = [{
+            date: "2025.5",
+            title: "MCP 영상",
+            views: 30000,
+            likes: 820,
+            emotion: "🥳",
+            thumbnail: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
+        }, {
+            date: "2025.3",
+            title: "홈페이지 만들기",
+            views: 10000,
+            likes: 810,
+            emotion: "😊",
+            thumbnail: "https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg"
+        }, ]; // Truncated for brevity
+        const subscribersData = [{
+            date: "2025.5",
+            count: 15000,
+            change: 2000,
+            emotion: "🎉"
+        }, {
+            date: "2025.1",
+            count: 13000,
+            change: 3000,
+            emotion: "📈"
+        }, {
+            date: "2024.8",
+            count: 10000,
+            change: 5000,
+            emotion: "🏆"
+        }, {
+            date: "2024.3",
+            count: 5000,
+            change: 4000,
+            emotion: "🔥"
+        }, {
+            date: "2023.10",
+            count: 1000,
+            change: 900,
+            emotion: "💪"
+        }, {
+            date: "2023.7",
+            count: 100,
+            change: 100,
+            emotion: "🌱"
+        }, ];
+        const videosTimeline = document.getElementById('videosTimeline'); // Although not used in this view, keep for tab functionality
+        const subscribersTimeline = document.getElementById('subscribersTimeline');
+        const loadingIndicator = document.getElementById('loading');
+        let videoItemsToShow = 4; // Keep for potential future use
+        let subscriberItemsToShow = 4;
+        const tabVideos = document.getElementById('tabVideos');
+        const tabSubscribers = document.getElementById('tabSubscribers');
+        const contentVideos = document.getElementById('contentVideos');
+        const contentSubscribers = document.getElementById('contentSubscribers');
+        tabVideos.addEventListener('click', () => {
+            tabVideos.classList.add('active');
+            tabSubscribers.classList.remove('active');
+            contentVideos.classList.add('active');
+            contentSubscribers.classList.remove('active');
+            // Potentially load video content if needed, or switch to a different display logic for videos
+            // For now, it just shows the placeholder text.
+            document.getElementById('subscriberCountHeader').textContent = subscribersData.length > 0 ? subscribersData[0].count.toLocaleString() : "N/A";
+        });
+        tabSubscribers.addEventListener('click', () => {
+            tabSubscribers.classList.add('active');
+            tabVideos.classList.remove('active');
+            contentSubscribers.classList.add('active');
+            contentVideos.classList.remove('active');
+            loadItems('subscriber', Math.min(subscriberItemsToShow, subscribersData.length));
+            updateSubscriberCountHeader();
+        });
+        function updateSubscriberCountHeader() {
+            if (subscribersData.length > 0) {
+                document.getElementById('subscriberCountHeader').textContent = subscribersData[0].count.toLocaleString();
+            }
+        }
+        function createSubscriberCard(item, index) {
+            const itemWrapper = document.createElement('div');
+            itemWrapper.classList.add('relative');
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('subscriber-card', 'mx-auto'); // mx-auto for centering with vertical timeline
+            const changeClass = item.change >= 0 ? 'positive' : 'negative';
+            const changeSign = item.change >= 0 ? '+' : '';
+            itemDiv.innerHTML = `
+                <div class="date-badge">${item.date}</div>
+                <div class="emotion-icon">${item.emotion}</div>
+                <p class="subscriber-count">${item.count.toLocaleString()}</p>
+                <p class="subscriber-change ${changeClass}">${changeSign}${item.change.toLocaleString()}명</p>
+                <p class="text-sm text-gray-400 mt-1">구독자 달성</p>
+            `;
+            itemWrapper.appendChild(itemDiv);
+            return itemWrapper;
+        }
+        function loadItems(type, count) {
+            const data = type === 'video' ? videosData : subscribersData; // Video data handling remains for tab logic
+            const timelineElement = type === 'video' ? videosTimeline : subscribersTimeline;
+            // Clear previous items
+            timelineElement.innerHTML = '';
+            const itemsToDisplay = data.slice(0, count);
+            if (type === 'subscriber') {
+                itemsToDisplay.forEach((item, index) => {
+                    const subscriberCard = createSubscriberCard(item, index);
+                    timelineElement.appendChild(subscriberCard);
+                });
+            } else if (type === 'video') {
+                // Placeholder for video loading logic if needed in the future
+                // For now, video content is just a placeholder text.
+            }
+        }
+        function handleScroll() {
+            // Only load more if subscriber tab is active and not near the end of data
+            if (contentSubscribers.classList.contains('active') && (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
+                 if (subscriberItemsToShow < subscribersData.length) {
+                    loadingIndicator.classList.remove('hidden');
+                    setTimeout(() => {
+                        subscriberItemsToShow += 2; // Load fewer items at a time for subscriber cards
+                        loadItems('subscriber', Math.min(subscriberItemsToShow, subscribersData.length));
+                        loadingIndicator.classList.add('hidden');
+                    }, 700); // Shorter delay for smoother feel
+                 }
+            }
+        }
+        window.addEventListener('scroll', handleScroll);
+        // Initial load for the active tab
+        if (contentSubscribers.classList.contains('active')) {
+            loadItems('subscriber', subscriberItemsToShow);
+        } else {
+            // If videos tab were to be active by default, load video items
+            // loadItems('video', videoItemsToShow); // Example
+        }
+        updateSubscriberCountHeader();
+    </script>
+
+</body></html>
