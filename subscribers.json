@@ -1,31 +1,44 @@
-[{
-    "date": "2025.5",
-    "count": 15000,
-    "change": 2000,
-    "emotion": "🎉"
-}, {
-    "date": "2025.1",
-    "count": 13000,
+[
+  {
+    "date": "2023.1",
+    "count": 3000,
     "change": 3000,
-    "emotion": "📈"
-}, {
-    "date": "2024.8",
-    "count": 10000,
-    "change": 5000,
-    "emotion": "🏆"
-}, {
-    "date": "2024.3",
-    "count": 5000,
-    "change": 4000,
-    "emotion": "🔥"
-}, {
-    "date": "2023.10",
-    "count": 1000,
-    "change": 900,
-    "emotion": "💪"
-}, {
-    "date": "2023.7",
-    "count": 100,
-    "change": 100,
     "emotion": "🌱"
-}]
+  },
+  {
+    "date": "2023.5",
+    "count": 3900,
+    "change": 900,
+    "emotion": "🚀"
+  },
+  {
+    "date": "2023.10",
+    "count": 4380,
+    "change": 480,
+    "emotion": "📈"
+  },
+  {
+    "date": "2024.3",
+    "count": 5380,
+    "change": 1000,
+    "emotion": "💪"
+  },
+  {
+    "date": "2024.8",
+    "count": 7380,
+    "change": 2000,
+    "emotion": "🔥"
+  },
+  {
+    "date": "2024.12",
+    "count": 9880,
+    "change": 2500,
+    "emotion": "🏆"
+  },
+  {
+    "date": "2025.5",
+    "count": 14880,
+    "change": 5000,
+    "emotion": "🎉"
+  }
+]
