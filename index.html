@@ -191,6 +191,7 @@
         const videosTimeline = document.getElementById('videosTimeline');
         const subscribersTimeline = document.getElementById('subscribersTimeline');
         const loadingIndicator = document.getElementById('loading');
+        let commentsData = []; // Initialize commentsData
         let videoItemsToShow = 4;
         let subscriberItemsToShow = 4;
         const tabVideos = document.getElementById('tabVideos');
@@ -257,16 +258,90 @@
             itemDiv.innerHTML = contentHtml;
             return itemDiv;
         }
-        function loadItems(type, count) {
-            const data = type === 'video' ? videosData : subscribersData;
-            const timelineElement = type === 'video' ? videosTimeline : subscribersTimeline;
-            timelineElement.innerHTML = '';
-            const itemsToDisplay = data.slice(0, count);
-            itemsToDisplay.forEach((item, index) => {
-                const timelineItem = createTimelineItem(item, index, itemsToDisplay.length, type);
-                timelineElement.appendChild(timelineItem);
-            });
+
+        function createCommentItem(comment, index, totalItems) {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('timeline-item', 'relative', 'py-6', 'px-4', 'rounded-lg', 'shadow-md', 'hover:shadow-xl', 'transition-all', 'duration-300');
+            
+            // Use a fixed index from getGradientColor for comment dot/border for consistency
+            const commentColorIndex = 7; // Using the last color (teal) for comments
+            const bgColor = getGradientColor(commentColorIndex, 8); // 8 total colors defined
+            itemDiv.classList.add(bgColor.replace('bg-', 'border-l-4').replace('-400', '-600'));
+            itemDiv.style.backgroundColor = 'white';
+            const dotColor = bgColor.replace('bg-', 'text-').replace('-400', '-500');
+
+            let contentHtml = `
+                <div class="timeline-dot ${dotColor}" style="top: 50%; transform: translate(-50%, -50%);"></div>
+                <div class="${index % 2 === 0 ? 'timeline-content-left text-right pr-16' : 'timeline-content-right text-left pl-16'}">
+                    <span class="absolute ${index % 2 === 0 ? 'right-full mr-4' : 'left-full ml-4'} top-1/2 -translate-y-1/2 text-2xl material-icons">chat_bubble_outline</span>
+                    <p class="text-sm text-gray-500 mb-1">구독자 댓글</p>
+                    <h4 class="text-md font-semibold text-gray-700">${comment.userName}</h4>
+                    <p class="text-gray-600 text-sm my-1">"${comment.commentText}"</p>
+                    <p class="text-xs text-gray-500">좋아요: ${comment.likes.toLocaleString()}개</p>
+                    ${comment.videoId ? `<p class="text-xs text-gray-400 mt-1 opacity-75">관련 영상: ${comment.videoId}</p>` : ''}
+                </div>
+            `;
+            itemDiv.innerHTML = contentHtml;
+            return itemDiv;
         }
+
+        function loadItems(type, count) {
+            const timelineElement = type === 'video' ? videosTimeline : subscribersTimeline;
+            timelineElement.innerHTML = ''; // Clear previous items
+
+            if (type === 'video') {
+                const videosToDisplay = videosData.slice(0, count);
+                let combinedData = [];
+                let commentIndex = 0;
+                let commentsAdded = 0;
+                const maxCommentsToShow = 2; // Maximum 2 comments
+
+                for (let i = 0; i < videosToDisplay.length; i++) {
+                    combinedData.push({ type: 'video', data: videosToDisplay[i] });
+
+                    // Try to add a comment after the 1st video and after the 3rd video
+                    // if comments are available and we haven't added the max number of comments
+                    if (commentsData.length > commentIndex && commentsAdded < maxCommentsToShow) {
+                        if (i === 0 || i === 2) { // After 1st video (index 0) or 3rd video (index 2)
+                             // Ensure we don't add same comment twice if videosToDisplay is small
+                            if (!combinedData.find(item => item.type === 'comment' && item.data.commentText === commentsData[commentIndex].commentText)) {
+                                combinedData.push({ type: 'comment', data: commentsData[commentIndex] });
+                                commentIndex++;
+                                commentsAdded++;
+                            }
+                        }
+                    }
+                }
+                
+                // If no comments were added (e.g. less than 2 videos) but we have videos and comments, add one comment.
+                if (videosToDisplay.length > 0 && commentsAdded === 0 && commentsData.length > commentIndex) {
+                    // Insert it after the first video, or at the end if only one video
+                    const insertPosition = combinedData.findIndex(item => item.type === 'video') + 1;
+                    combinedData.splice(insertPosition, 0, { type: 'comment', data: commentsData[commentIndex] });
+                    commentIndex++;
+                    commentsAdded++;
+                }
+
+
+                combinedData.forEach((item, index) => {
+                    let timelineItem;
+                    if (item.type === 'video') {
+                        timelineItem = createTimelineItem(item.data, index, combinedData.length, 'video');
+                    } else { // comment
+                        timelineItem = createCommentItem(item.data, index, combinedData.length);
+                    }
+                    timelineElement.appendChild(timelineItem);
+                });
+
+            } else { // subscriber
+                const itemsToDisplay = subscribersData.slice(0, count);
+                itemsToDisplay.forEach((item, index) => {
+                    const timelineItem = createTimelineItem(item, index, itemsToDisplay.length, type);
+                    timelineElement.appendChild(timelineItem);
+                });
+            }
+        }
+
         function handleScroll() {
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
                 loadingIndicator.classList.remove('hidden');
@@ -287,7 +362,26 @@
             }
         }
         window.addEventListener('scroll', handleScroll);
-        loadItems('video', videoItemsToShow);
+
+        // Fetch comments data
+        fetch('users_comment.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                commentsData = data;
+                // Initial load for videos should happen after comments are fetched
+                loadItems('video', videoItemsToShow); 
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation for comments:', error);
+                // Still load videos even if comments fail
+                loadItems('video', videoItemsToShow);
+            });
+
         loadItems('subscriber', subscriberItemsToShow);
         updateSubscriberCountHeader();
     </script>
